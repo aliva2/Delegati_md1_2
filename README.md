@@ -32,3 +32,4 @@ This project is a C# WinForms application that:
 ## 📜 Code Structure
 
 ### **📂 FunctionTable (Main Project)**
+Two tables in forms: interface 1 and interface2.
