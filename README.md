@@ -25,7 +25,7 @@ This project is a C# WinForms application that:
 2️⃣ Run `Form1.cs`  
 3️⃣ Enter values & select function  
 4️⃣ Click **"Tabula"** to generate values  
-5️⃣ Click **"Grafiks"** to view function  
+5️⃣ Click **"Grafiks"** to view function - when clicked it opens `Form2.cs` 
 
 ---
 
