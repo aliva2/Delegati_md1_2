@@ -97,7 +97,6 @@
             this.radioButton3.TabStop = true;
             this.radioButton3.Text = "y=(ax+b)/(ax+c)";
             this.radioButton3.UseVisualStyleBackColor = true;
-            this.radioButton3.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
             // 
             // groupBox1
             // 
@@ -117,12 +116,11 @@
             this.radioButton4.AutoSize = true;
             this.radioButton4.Location = new System.Drawing.Point(20, 87);
             this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(59, 17);
+            this.radioButton4.Size = new System.Drawing.Size(85, 17);
             this.radioButton4.TabIndex = 4;
             this.radioButton4.TabStop = true;
-            this.radioButton4.Text = "y=ax^2";
+            this.radioButton4.Text = "y=ax^2-bx+c";
             this.radioButton4.UseVisualStyleBackColor = true;
-            this.radioButton4.CheckedChanged += new System.EventHandler(this.radioButton4_CheckedChanged);
             // 
             // groupBox2
             // 
@@ -204,14 +202,14 @@
             // 
             // textBox4
             // 
-            this.textBox4.Location = new System.Drawing.Point(52, 71);
+            this.textBox4.Location = new System.Drawing.Point(52, 15);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(93, 20);
             this.textBox4.TabIndex = 11;
             // 
             // textBox6
             // 
-            this.textBox6.Location = new System.Drawing.Point(52, 19);
+            this.textBox6.Location = new System.Drawing.Point(52, 71);
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(93, 20);
             this.textBox6.TabIndex = 7;
