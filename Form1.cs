@@ -7,7 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Delegati_md1_2;
+using Delegati_md1_2; // namespace izmantot kopīgi Form 1 un Form 2,
+                      // ar funkc public delegate double DY(double x, double a, double b, double c); 
 
 namespace Delegati_md1_2
 {
@@ -28,7 +29,7 @@ namespace Delegati_md1_2
             // inicializē tabulas parametru laukus
             textBox4.Text = "1";
             textBox5.Text = "10";
-            textBox6.Text = "1";
+            textBox6.Text = "0,5";
 
             // piešķir tag vērtības radiopogām
             radioButton1.Tag = 0; // y = ax^2 + bx + c
@@ -59,7 +60,7 @@ namespace Delegati_md1_2
                 // dabū radiopogas Tag (līdzīgs id)
                 int selectedOption = (int)(sender as RadioButton).Tag;
 
-                // Get the current values from textboxes (to make sure the latest values are used)
+                // dabū datus no teksta logiem
                 double x_Begin = double.Parse(textBox4.Text);
                 double x_End = double.Parse(textBox5.Text);
                 double step = double.Parse(textBox6.Text);
@@ -67,7 +68,7 @@ namespace Delegati_md1_2
                 double b = double.Parse(textBox2.Text);
                 double c = double.Parse(textBox3.Text);
 
-                // zīmē tabulu ar DoTable
+                // zīmē tabulu ar DoTable (x, y(x))
                 DoTable(Y[selectedOption], x_Begin, x_End, step, a, b, c);
             }
         }
@@ -87,7 +88,7 @@ namespace Delegati_md1_2
         private void DoTable(DY y, double x_Begin, double x_End, double step, double a, double b, double c)
         {
             richTextBox1.Clear();
-            richTextBox1.AppendText("   x         y ");
+            richTextBox1.AppendText("   x           y ");
             for (double x = x_Begin; x <= x_End; x += step) {
                 double yValue = y(x, a, b, c);
                 richTextBox1.AppendText("\n  " + x.ToString() + "\t" + y(x, a, b, c).ToString());
@@ -104,32 +105,32 @@ namespace Delegati_md1_2
         // poga "Tabula" - parāda tabulu
         private void button1_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Parādīt tabulu!");
-            // Read the values from the textboxes
-            double x_Begin = double.Parse(textBox4.Text);  // x_Begin from textbox4
-            double x_End = double.Parse(textBox5.Text);    // x_End from textbox5
-            double step = double.Parse(textBox6.Text);     // step from textbox6
-            double a = double.Parse(textBox1.Text);        // a from textbox1
-            double b = double.Parse(textBox2.Text);        // b from textbox2
-            double c = double.Parse(textBox3.Text);        // c from textbox3
+            //MessageBox.Show("Parādīt tabulu!");
+            // teksta lauki
+            double x_Begin = double.Parse(textBox4.Text);  
+            double x_End = double.Parse(textBox5.Text);    
+            double step = double.Parse(textBox6.Text);     
+            double a = double.Parse(textBox1.Text);        
+            double b = double.Parse(textBox2.Text);        
+            double c = double.Parse(textBox3.Text);        
 
-            // Determine which function is selected based on the radio button
+            // kura poga noklikšķināta
             int selectedOption = radioButton1.Checked ? 0 :
                                  radioButton2.Checked ? 1 :
                                  radioButton3.Checked ? 2 : 3;
 
-            // Call the DoTable function to update the table with the selected function and the updated parameters
+            // jaunākie tabulas dati
             DoTable(Y[selectedOption], x_Begin, x_End, step, a, b, c);
         }
 
-        // poga "Grafiks" - parāda grafiku
+        // parāda grafiku
         private void button2_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Parādīt grafiku!");
-            //make code go to form 2 and do delegate fu and showfu
+            //MessageBox.Show("Parādīt grafiku!");
+            // iet uz otro formu Form2
             int selectedOption = radioButton1.Checked ? 0 : radioButton2.Checked ? 1 : radioButton3.Checked ? 2 : 3;
 
-            // Parse the values from text boxes for x_Begin, x_End, step, a, b, c
+            // dabū datus no teksta logiem
             double x_Begin = double.Parse(textBox4.Text);
             double x_End = double.Parse(textBox5.Text);
             double step = double.Parse(textBox6.Text);

@@ -8,19 +8,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Delegati_md1_2;
+using Delegati_md1_2; // kopīgi Form 1 un Form 2,public delegate double DY(double x, double a, double b, double c); 
 
 namespace Delegati_md1_2
 {
     public partial class Form2 : Form
     {
 
-        // Delegate to represent the function
-        private DY selectedFunction;
-        private double x_Begin, x_End, step, a, b, c;
+        private DY selectedFunction; // delegāts - izvēlātā funkcija
+        private double x_Begin, x_End, step, a, b, c; // koeficienti
 
 
-        // Constructor accepting the selected function delegate
+        // konstruktors no delegāta
         public Form2(DY func, double x_Begin, double x_End, double step, double a, double b, double c)
         {
             InitializeComponent();
@@ -31,39 +30,43 @@ namespace Delegati_md1_2
             this.a = a;
             this.b = b;
             this.c = c;
+
+            this.pictureBox1.Invalidate(); // ielādē formu 2 un uzzīmē grafiku
+
         }
 
-        // Method to display the function graph
-        public void ShowGraph(DY function)
+        public delegate double fu(double x, double a, double b, double c);
+        // grafika zīmēšana
+        public void ShowFu(fu F, int m)
         {
+            // veido grafiks objektu g un zīmēs to iekšā pictureBox
             Graphics g = pictureBox1.CreateGraphics();
-            g.Clear(Color.White);
-            Pen axisPen = new Pen(Color.Silver);
+            g.Clear(Color.White); //notīra visu, viss paliek balts
+            Pen axisPen = new Pen(Color.Black); //asis būs melnā krāsā
+            
+            // centrs pa x un y asīm ir pa vidu pictureBox
             int xc = pictureBox1.Width / 2, yc = pictureBox1.Height / 2;
-            g.DrawLine(axisPen, 10, yc, 2 * xc - 10, yc); // X-axis
-            g.DrawLine(axisPen, xc, 10, xc, 2 * yc - 10); // Y-axis
+            // uzzīmē x un y asis
+            g.DrawLine(axisPen, 10, yc, 2 * xc - 10, yc); 
+            g.DrawLine(axisPen, xc, 10, xc, 2 * yc - 10);
 
-            Pen plotPen = new Pen(Color.Black);
-            double x = x_Begin;
-            int scale = 30; // Scaling factor for plotting
-            while (x <= x_End)
+            Pen plotPen = new Pen(Color.Black); // grafiks melnā krāsa
+            double x = x_Begin; //sākuma koordināta x
+            int scale = 30; // mērogošana?
+            while (x <= x_End) // no sākuma līdz beigām zīmēs visus punktus
             {
                 try
                 {
-                    double y = function(x, a, b, c); // Get the y value using the function
-                    int xe = (int)(xc + scale * x);
-                    int ye = (int)(yc - scale * y);
-                    g.DrawEllipse(plotPen, xe, ye, 2, 2); // Plot the point
+                    double y = F(x, a, b, c);
+                    int xe = (int)(xc + m * x);
+                    int ye = (int)(yc - m * y);
+                    g.DrawEllipse(plotPen, xe, ye, 1, 1);
                 }
                 catch { }
                 x += step;
             }
         }
 
-        // Form Load event to trigger graph drawing
-        private void Form2_Load(object sender, EventArgs e)
-        {
-            ShowGraph(selectedFunction);
-        }
+
     }
 }
