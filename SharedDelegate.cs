@@ -1,5 +1,5 @@
 ﻿namespace Delegati_md1_2
 {
-    // Define the delegate in a shared location
+    // kopīgais delegāts formām 1 un 2
     public delegate double DY(double x, double a, double b, double c);
 }

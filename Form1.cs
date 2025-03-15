@@ -14,22 +14,22 @@ namespace Delegati_md1_2
 {
     public partial class Form1 : Form
     {
-        private double a=2, b=3, c=4; // koeficienti
-        private double x_Begin=1, x_End=10, step=1; // tabulas parametri
+        private double a = 1, b = 2, c = 3; // koeficienti
+        private double x_Begin = -10, x_End = 10, step = 0.1; // tabulas parametri
 
         public Form1()
         {
             InitializeComponent();
 
             // inicializē koeficientus un piešķir sākotnējās vērtības
-            textBox1.Text = "2";
-            textBox2.Text = "3";
-            textBox3.Text = "4";
+            textBox1.Text = "1";
+            textBox2.Text = "2";
+            textBox3.Text = "3";
 
             // inicializē tabulas parametru laukus
-            textBox4.Text = "1";
+            textBox4.Text = "-10";
             textBox5.Text = "10";
-            textBox6.Text = "0,5";
+            textBox6.Text = "0,1";
 
             // piešķir tag vērtības radiopogām
             radioButton1.Tag = 0; // y = ax^2 + bx + c
@@ -58,7 +58,7 @@ namespace Delegati_md1_2
             if ((sender as RadioButton).Checked)
             {
                 // dabū radiopogas Tag (līdzīgs id)
-                int selectedOption = (int)(sender as RadioButton).Tag;
+                int selectedOption = Convert.ToInt32(((RadioButton)sender).Tag);
 
                 // dabū datus no teksta logiem
                 double x_Begin = double.Parse(textBox4.Text);
@@ -74,10 +74,30 @@ namespace Delegati_md1_2
         }
 
         //  funkciju saraksts radiopogām
-        public static double Y0(double x, double a, double b, double c) => a * Math.Pow(x, 2) + b * x + c;
-        public static double Y1(double x, double a, double b, double c) => x != 0 ? a / Math.Pow(x, 2) + b / x + c : double.NaN;
-        public static double Y2(double x, double a, double b, double c) => (a * x + b) / (a * x + c);
-        public static double Y3(double x, double a, double b, double c) => a * Math.Pow(x, 2) - b * x + c;
+        public static double Y0(double x, double a, double b, double c)
+        {
+            return a * Math.Pow(x, 2) + b * x + c;
+        }
+        public static double Y1(double x, double a, double b, double c)
+        {
+            if (x == 0)
+            {
+                return double.NaN; // nedrīkst dalīt ar 0
+            }
+            return a / Math.Pow(x, 2) + b / x + c;
+        }
+        public static double Y2(double x, double a, double b, double c)
+        {
+            if (a * x + c == 0)
+            {
+                return double.NaN; // nedrīkst dalīt ar 0
+            }
+            return (a * x + b) / (a * x + c);
+        }
+        public static double Y3(double x, double a, double b, double c)
+        {
+            return a * Math.Pow(x, 2) - b * x + c;
+        }
 
 
         // mūsu funkciju masīvs - var turpināt, pielikts vēl Y3,
@@ -89,17 +109,12 @@ namespace Delegati_md1_2
         {
             richTextBox1.Clear();
             richTextBox1.AppendText("   x           y ");
-            for (double x = x_Begin; x <= x_End; x += step) {
+            for (double x = x_Begin; x <= x_End; x += step)
+            {
                 double yValue = y(x, a, b, c);
                 richTextBox1.AppendText("\n  " + x.ToString() + "\t" + y(x, a, b, c).ToString());
             }
-                
-        }
 
-        private void radioButton1_Click(object sender, EventArgs e)
-        {
-            int k = Convert.ToInt32(((RadioButton)sender).Tag);
-            DoTable(Y[k], x_Begin, x_End, step, a, b, c);
         }
 
         // poga "Tabula" - parāda tabulu
@@ -107,12 +122,12 @@ namespace Delegati_md1_2
         {
             //MessageBox.Show("Parādīt tabulu!");
             // teksta lauki
-            double x_Begin = double.Parse(textBox4.Text);  
-            double x_End = double.Parse(textBox5.Text);    
-            double step = double.Parse(textBox6.Text);     
-            double a = double.Parse(textBox1.Text);        
-            double b = double.Parse(textBox2.Text);        
-            double c = double.Parse(textBox3.Text);        
+            double x_Begin = double.Parse(textBox4.Text);
+            double x_End = double.Parse(textBox5.Text);
+            double step = double.Parse(textBox6.Text);
+            double a = double.Parse(textBox1.Text);
+            double b = double.Parse(textBox2.Text);
+            double c = double.Parse(textBox3.Text);
 
             // kura poga noklikšķināta
             int selectedOption = radioButton1.Checked ? 0 :
@@ -127,7 +142,7 @@ namespace Delegati_md1_2
         private void button2_Click(object sender, EventArgs e)
         {
             //MessageBox.Show("Parādīt grafiku!");
-            // iet uz otro formu Form2
+            // atkarībā no radiopogas funkcijas izvēles rāda grafiku
             int selectedOption = radioButton1.Checked ? 0 : radioButton2.Checked ? 1 : radioButton3.Checked ? 2 : 3;
 
             // dabū datus no teksta logiem
@@ -138,12 +153,9 @@ namespace Delegati_md1_2
             double b = double.Parse(textBox2.Text);
             double c = double.Parse(textBox3.Text);
 
+            // iet uz otro formu Form2
             Form2 graphForm = new Form2(Y[selectedOption], x_Begin, x_End, step, a, b, c);
             graphForm.Show();
         }
-
-
- 
- 
     }
 }
